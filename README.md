@@ -40,4 +40,4 @@ Explore the project live [here](https://your-frontend-demo-link.com)!
 
 Feel free to contribute to this project by submitting pull requests or reporting issues! Let's build a great social media platform together.
 
-Explore the backend repository of our MERN stack social media project [here](https://github.com/Rahim-lrb?tab=repositories).
+Explore the backend repository of our MERN stack social media project [here](https://github.com/Rahim-lrb/mern-social-media-backend).
