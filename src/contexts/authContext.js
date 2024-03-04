@@ -1,35 +1,35 @@
-// authContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const url = 'http://localhost:5000/api';
+// const url = 'http://localhost:5000/api';
+// const url = "https://wex-backend.onrender.com/api"
+const url = "/api"
+
 
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState();
-    const [ isLoadingUser, setIsLoadingUser ] = useState(true);
+    const [ currentUser, setCurrentUser ] = useState();
+
+    const getCurrentUser = async () => {
+        console.log("get current user")
+        try {
+            const response = await axios.get(`${url}/users/me`, { withCredentials: true });
+            console.log(response.data)
+            setCurrentUser(response.data);
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     useEffect(() => {
         getCurrentUser();
     }, []);
 
-
-    const getCurrentUser = async () => {
-        try {
-            const response = await axios.get(`${url}/users/me`, { withCredentials: true });
-            setCurrentUser(response.data.user);
-        } catch (error) {
-            console.error('Error fetching user:', error);
-        } finally {
-            setIsLoadingUser(false);
-        }
-    };
-
     const login = async (credentials) => {
         try {
             const userData = await axios.post(`${url}/auth/login`, credentials, { withCredentials: true });
-            getCurrentUser()
+            await getCurrentUser()
             return userData;
         } catch (error) {
             throw new Error(error.message || 'Login failed');
@@ -60,8 +60,8 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ currentUser, login, logout, signup }}>
-            {!isLoadingUser && children} {/* Render children only when user data is loaded */}
+        <UserContext.Provider value={{ currentUser, login, logout, signup, getCurrentUser }}>
+            {children}
         </UserContext.Provider>
     );
 };

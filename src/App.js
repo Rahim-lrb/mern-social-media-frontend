@@ -24,12 +24,10 @@ function App() {
       <ShowNavBar>
         <Navbar></Navbar>
       </ShowNavBar>
-      {/* <Navbar /> */}
       <LoadingBar color='#3b82f6' progress={progress} onLoaderFinished={() => setProgress(0)} />
       <Routes>
 
         <Route path="/"  element={currentUser ? <Home setProgress={setProgress}/> : <Navigate to="/login" />} />
-        {/* <Route path="/profile" element={<Profile />}/> */}
         <Route path="/profile" element={currentUser ? <Profile /> : <Navigate to="/login" />}/>
         <Route path="/login" element={!currentUser ? <Login/> : <Navigate to="/" />} />
         <Route path="/signup" element={!currentUser ? <SignUp /> : <Navigate to="/" />} />

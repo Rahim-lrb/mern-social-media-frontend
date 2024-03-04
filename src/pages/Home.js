@@ -65,7 +65,7 @@ export default function Home({ setProgress }) {
                 </div>
 
                 {fetched !== null && fetched.map(post => (
-                    <Post key={post.id} postData={post} />
+                    <Post key={post._id} postData={post} />
                 ))}
             </div>
         </div>

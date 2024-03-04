@@ -6,7 +6,6 @@ export default function ShowNavBar({ children }) {
     const [showNavBar, setShowNavBar] = useState(true);
 
     useEffect(() => {
-        // console.log("location has changed");
         if (location.pathname === "/login" || location.pathname === "/signup") {
         setShowNavBar(false);
         } else {

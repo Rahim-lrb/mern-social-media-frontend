@@ -1,21 +1,24 @@
-import React, {useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { createComment } from '../api';
 import { UserContext } from "../contexts/authContext"
 import { PostContext } from '../contexts/postsContext';
 import { Link } from "react-router-dom"
 
-const Post = ({ postData } ) => { // ! we either send the data from home.js (all posts), or from profile posts of the owner, or other posts
-    const { addComment, like, unlike } = useContext(PostContext);
-    const [ passedData, setPassedData] = useState(postData.user) // 
 
-    // we use it to find out if we likes any of the posts
+const Post = ({ postData }) => { // ! we either send the data from home.js (all posts), or from profile posts of the owner, or other posts
+    const { addComment, like, unlike } = useContext(PostContext);
+    const [ passedData, setPassedData ] = useState(postData.user)
+
+    // we use it to find out if we likes any of the posts or if we can delete any of the posts
     const { currentUser } = useContext(UserContext);
-    const [isLiked, setIsLiked] = useState(() => {
+    const [ isLiked, setIsLiked ] = useState(() => {
         return postData.likes && postData.likes.find(like => like._id === currentUser._id) ? true : false;
     });
 
+    const [newComment, setNewComment] = useState('');
 
-    const [ newComment, setNewComment ] = useState('');
+    const { deletePostById } = useContext(PostContext);
+
 
     const calculateTimeAgo = (createdAt) => {
         const currentTime = new Date();
@@ -41,29 +44,42 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
         }
         setIsLiked(prevIsLiked => !prevIsLiked);
     }
-    console.log(postData.user)
     
     return (
         <div className="bg-white shadow-md rounded-lg mb-6">
-            <div className="flex flex-row px-2 py-3 mx-3">
-                <Link to="/profile" state={{ user: passedData }}>
-                    <div className="w-auto h-auto rounded-full">
-                        <img className="w-12 h-12 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src={postData.user?.image} />
-                    </div>
-                </Link>
-                <div className="flex flex-col mb-2 ml-4 mt-1">
-                    <div className="text-gray-600 text-sm font-semibold">{postData?.user?.name}</div>
-                    <div className="flex w-full mt-1">
-                        <div className="text-blue-700 font-base text-xs mr-1 cursor-pointer">
-                            User
+            <div className="flex flex-row justify-between px-2 py-3 mx-3">
+                <div className="flex">
+                    <Link to="/profile" state={{ user: passedData }}>
+                        <div className="w-auto h-auto rounded-full">
+                            <img className="w-12 h-12 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src={postData.user?.image} />
                         </div>
-                        <div className="text-gray-400 font-thin text-xs">
-                            • {calculateTimeAgo(postData?.createdAt)}
-                            
+                    </Link>
+                    <div className="flex flex-col mb-2 ml-4 mt-1">
+                        <div className="text-gray-600 text-sm font-semibold">{postData?.user?.name}</div>
+                        <div className="flex w-full mt-1">
+                            <div className="text-blue-700 font-base text-xs mr-1 cursor-pointer">
+                                User
+                            </div>
+                            <div className="text-gray-400 font-thin text-xs">
+                                • {calculateTimeAgo(postData?.createdAt)}
+                            </div>
                         </div>
                     </div>
                 </div>
+                {/* delete post */}
+                {currentUser._id === postData.user._id && (
+                    <button onClick={(e) => {
+                        e.preventDefault()
+                        deletePostById(postData._id)
+                    }} className="bg-red-500 hover:bg-red-400 duration-300 active:bg-red-600 active:scale-110 rounded-full w-8 h-8 flex justify-center items-center">
+                        <svg className="text-white w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>)
+                }
             </div>
+
+
             <div className="border-b border-gray-100"></div>
             <div className="text-gray-400 font-medium text-sm mb-5 mt-6 mx-3 px-2">
                 <div className="grid grid-cols-6 col-span-2 gap-2">
@@ -71,8 +87,8 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
                         {postData.image && (
                             <img className="h-full w-full object-cover"
                                 src={postData.image}
-                                    alt="Post Image" />
-                            )}
+                                alt="Post Image" />
+                        )}
                     </div>
                 </div>
             </div>
@@ -84,7 +100,7 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
                         className="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="14px"
                             viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            <path stroke-linecap="round" stroke-linejoin="round" strokeWidth="2"
                                 d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                         </svg>
                     </span>
@@ -99,13 +115,13 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
                             </path>
                         </svg>
                     </span>
-                    
+
                     {isLiked ? (
                         <span
                             className="bg-white hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2 like-button select-none"
                             onClick={() => handleLiking(postData._id)}>
                             <svg className="h-4 w-4 text-red-500 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                             </svg>
                         </span>
                     ) : (
@@ -113,7 +129,7 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
                             className="bg-white hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2 like-button select-none"
                             onClick={() => handleLiking(postData._id)}>
                             <svg className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="2">
+                                stroke="currentColor" strokeWidth="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
                                 </path>
@@ -139,9 +155,9 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
                 className="relative flex items-center self-center w-full max-w-xl p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
                 <img className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
                     alt="User avatar"
-                    src={`${currentUser.image}`}/>
+                    src={`${currentUser.image}`} />
                 <span className="absolute inset-y-0 right-0 flex items-center pr-6">
-                    <button type="submit" onClick={() => {addComment(postData._id, newComment); setNewComment("") } }
+                    <button type="submit" onClick={() => { addComment(postData._id, newComment); setNewComment("") }}
                         className="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
                         <svg className="ml-1" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -153,7 +169,7 @@ const Post = ({ postData } ) => { // ! we either send the data from home.js (all
             </div>
             {postData.comments.map(comment => (
                 <div key={comment._id} className="relative flex items-center self-center w-full max-w-xl p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
-                    <img className="w-10 h-10 object-cover rounded-full shadow cursor-pointer mr-3" alt="User avatar"   src={comment?.user?.image}/>
+                    <img className="w-10 h-10 object-cover rounded-full shadow cursor-pointer mr-3" alt="User avatar" src={comment?.user?.image} />
                     <h3 className='font-semibold mr-4 text-gray-400'>{comment?.user?.name}</h3>
                     <p className=' font-semibold'>{comment.content}</p>
                     <p className='text-sm text-gray-400 ml-5'>{calculateTimeAgo(comment.createdAt)}</p>

@@ -13,24 +13,22 @@ const Profile = (props) => {
 
 
     const [ posts, setPosts ] = useState([])
-    // ! the Post comp needs data , so we should prepare it before in profile, and home.js
-    // ! in home.js get all posts 
-    // ! in profile.js get the currentUser profile , or any user
 
-    // ! profile have the data from either currentUser or sent user from the home
-    // ! 
     useEffect(() => {
         fetchUserPosts()
     }, [userForUsing]);
 
     const fetchUserPosts = async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/posts/user/${userForUsing._id}`);
+            // const response = await axios.get(`http://localhost:5000/api/posts/user/${userForUsing._id}`);
+            // const response = await axios.get(`https://wex-backend.onrender.com/api/posts/user/${userForUsing._id}`);
+            const response = await axios.get(`/api/posts/user/${userForUsing._id}`);
             setPosts(response.data);
         } catch (error) {
             console.error('Error fetching user posts:', error);
         }
     };
+    console.log("posts")
     console.log(posts)
 
     return (

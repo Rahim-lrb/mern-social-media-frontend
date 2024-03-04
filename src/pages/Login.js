@@ -20,6 +20,7 @@ export default function Login() {
     try {
       const userData = await login({ email: formData.email, password: formData.password });
       if (userData.data) {
+        console.log(userData.data)
         await getCurrentUser();
         toast.success("login successfully");
       }

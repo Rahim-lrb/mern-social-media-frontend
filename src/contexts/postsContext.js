@@ -1,10 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { UserContext } from './authContext';
 import axios from 'axios';
-import { fetchPosts, createPost, createComment, likePost, unlikePost, fetchPostsByUser } from '../api';
+import { fetchPosts, fetchPostsByUser, createPost, createComment, likePost, unlikePost, deletePost } from '../api';
 
 
-const url = 'http://localhost:5000/api';
+// const url = 'http://localhost:5000/api'; local host
+// const url = "https://wex-backend.onrender.com/api" // hosted
+// const url = "/api" 
+
 
 export const PostContext = createContext([]);
 
@@ -35,6 +38,16 @@ export const PostProvider = ({ children }) => {
             getPosts()
         } catch (error) {
             console.error("Error adding post:", error);
+        }
+    };
+    const deletePostById = async (postId) => {
+        console.log("deleting a post")
+        console.log(postId)
+        try {
+            await deletePost(postId)
+            getPosts()
+        } catch (error) {
+            console.error("Error deleting post:", error);
         }
     };
 
@@ -70,6 +83,16 @@ export const PostProvider = ({ children }) => {
 
 
 
+    const fetchUserPosts = async (userId) => {
+        try {
+            const response = await fetchPostsByUser(userId)
+            setUserPosts(response.data);
+        } catch (error) {
+            console.error('Error fetching user posts:', error);
+        }
+    };
+
+
     useEffect(() => {
         const fetchData = async () => {
             if (currentUser) {
@@ -81,18 +104,9 @@ export const PostProvider = ({ children }) => {
         fetchData();
     }, [currentUser]);
 
-    const fetchUserPosts = async (userId) => {
-        try {
-            const response = await axios.get(`${url}/posts/user/${userId}`);
-            setUserPosts(response.data);
-        } catch (error) {
-            console.error('Error fetching user posts:', error);
-        }
-    };
-
 
     return (
-        <PostContext.Provider value={{ fetched, getPosts, addPost, addComment, like, unlike, userPosts }}>
+        <PostContext.Provider value={{ fetched, getPosts, addPost, addComment, like, unlike, userPosts, deletePostById, fetchUserPosts }}>
             {children}
         </PostContext.Provider>
     );
