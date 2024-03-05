@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
+import axios from 'axios';
 import Post from '../components/Post';
 import { UserContext } from '../contexts/authContext';
 import { PostContext } from '../contexts/postsContext';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 
 const Profile = (props) => {
     const { currentUser } = useContext(UserContext); 
@@ -20,9 +20,11 @@ const Profile = (props) => {
 
     const fetchUserPosts = async (userId) => {
         try {
-            // const response = await axios.get(`http://localhost:5000/api/posts/user/${userForUsing._id}`);
-            // const response = await axios.get(`https://wex-backend.onrender.com/api/posts/user/${userForUsing._id}`);
-            const response = await axios.get(`/api/posts/user/${userForUsing._id}`);
+            // const url = 'http://localhost:5000/api'; local host
+            const url = "https://wex-backend.onrender.com/api" // hosted
+            // const url = "/api"  proxy
+
+            const response = await axios.get(`${url}/api/posts/user/${userForUsing._id}`);
             setPosts(response.data);
         } catch (error) {
             console.error('Error fetching user posts:', error);
