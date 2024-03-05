@@ -17,7 +17,7 @@ export const createPost = (formData) => axios.post(`${url}/posts`, formData, {
 
 export const deletePost = (postId) => axios.delete(`${url}/posts/${postId}`);
 
-export const createComment = (commentData) => axios.post("http://localhost:5000/api/posts/comments", commentData);
+export const createComment = (commentData) => axios.post(`${url}/posts/comments`, commentData);
 
 export const likePost = (data) => axios.post(`${url}/posts/like`, data);
 export const unlikePost = (data) => axios.post(`${url}/posts/unlike`, data);

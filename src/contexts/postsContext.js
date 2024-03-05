@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { UserContext } from './authContext';
-import axios from 'axios';
 import { fetchPosts, fetchPostsByUser, createPost, createComment, likePost, unlikePost, deletePost } from '../api';
 
 
