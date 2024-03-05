@@ -6,6 +6,16 @@ Welcome to the frontend repository of our MERN stack social media project! This 
 
 Explore the project live [here](https://wex-media.netlify.app/)!
 
+## Screenshots
+
+### Loginpage
+[![Loginpage](https://i.postimg.cc/BZPH9jGC/Screenshot-2024-03-05-171814.png)](https://postimg.cc/ThGpnY1y)
+### Homepage
+[![Homepage](https://i.postimg.cc/rpxkXDL6/screencapture-wex-media-netlify-app-home-2024-03-05-17-11-52.png)](https://postimg.cc/4KfMpNdw)
+
+
+
+
 ## Features
 
 - **Stunning UI**: A visually captivating design with modern aesthetics, ensuring an intuitive and engaging user experience.
