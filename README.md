@@ -4,7 +4,7 @@ Welcome to the frontend repository of our MERN stack social media project! This 
 
 ## Demo
 
-Explore the project live [here](https://your-frontend-demo-link.com)!
+Explore the project live [here](https://wex-media.netlify.app/)!
 
 ## Features
 

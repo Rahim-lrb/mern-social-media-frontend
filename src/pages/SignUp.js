@@ -42,7 +42,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="bg-gray-100 flex items-center justify-center h-screen">
+    <div className="bg-gray-100 flex items-center justify-center h-full">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
         <div className="flex justify-center mb-6">
           <label htmlFor="image" className="avatar-upload flex items-center justify-center w-24 h-24 rounded-full border-2 border-gray-300 cursor-pointer overflow-hidden">

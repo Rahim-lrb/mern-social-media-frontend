@@ -24,7 +24,7 @@ export default function Home({ setProgress }) {
         <div className='relative w-full'>
             <div className='sm:px-20 lg:w-3/4 mx-auto'>
                 <div className="mt-12 mb-10">
-                    <form className="bg-white shadow rounded-lg mb-6 p-4 w-full md:w-3/4 mx-auto">
+                    <form onClick={(e) => { e.preventDefault(); toggleModal(); }} className="bg-white shadow rounded-lg mb-6 p-4 w-full md:w-3/4 mx-auto">
                         <textarea
                             name="message"
                             placeholder="Type something..."

@@ -5,11 +5,10 @@ import { PostContext } from '../contexts/postsContext';
 import { Link } from "react-router-dom"
 
 
-const Post = ({ postData }) => { // ! we either send the data from home.js (all posts), or from profile posts of the owner, or other posts
+const Post = ({ postData }) => { 
     const { addComment, like, unlike } = useContext(PostContext);
     const [ passedData, setPassedData ] = useState(postData.user)
 
-    // we use it to find out if we likes any of the posts or if we can delete any of the posts
     const { currentUser } = useContext(UserContext);
     const [ isLiked, setIsLiked ] = useState(() => {
         return postData.likes && postData.likes.find(like => like._id === currentUser._id) ? true : false;

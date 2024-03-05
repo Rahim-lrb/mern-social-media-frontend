@@ -9,7 +9,7 @@ export default function Navbar() {
   };
   return (
     <nav className="relative px-16 py-4 flex justify-between items-center bg-white">
-      <Link to="/" className="text-3xl font-bold leading-none">wex</Link>
+      <Link to="/" className=" capitalize text-3xl font-bold leading-none">wex</Link>
 
       <div>
         {currentUser ? (
