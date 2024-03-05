@@ -5,7 +5,7 @@ import { fetchPosts, fetchPostsByUser, createPost, createComment, likePost, unli
 
 
 // const url = 'http://localhost:5000/api'; local host
-// const url = "https://wex-backend.onrender.com/api" // hosted
+const url = "https://wex-backend.onrender.com/api" // hosted
 // const url = "/api" 
 
 

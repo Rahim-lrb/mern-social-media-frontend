@@ -2,8 +2,8 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // const url = 'http://localhost:5000/api';
-// const url = "https://wex-backend.onrender.com/api"
-const url = "/api"
+const url = "https://wex-backend.onrender.com/api"
+// const url = "/api"
 
 
 export const UserContext = createContext(null);
@@ -16,8 +16,10 @@ export const UserProvider = ({ children }) => {
         try {
             const response = await axios.get(`${url}/users/me`, { withCredentials: true });
             console.log(response.data)
+            console.log("we got the currentUser")
             setCurrentUser(response.data);
         } catch (error) {
+            console.log("we didn't get the current user")
             console.log(error)
         }
     };
