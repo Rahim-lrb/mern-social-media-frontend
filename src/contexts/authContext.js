@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // const url = 'http://localhost:5000/api';
 const url = "https://wex-backend.onrender.com/api"
-// const url = "/api"
 
 
 export const UserContext = createContext(null);
