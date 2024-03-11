@@ -8,14 +8,14 @@ export default function Navbar() {
     await logout();
   };
   return (
-    <nav className="relative px-16 py-4 flex justify-between items-center bg-white">
-      <Link to="/" className=" capitalize text-3xl font-bold leading-none">wex</Link>
+    <nav className="relative md:px-20 sm:px-8 px-4 py-4 flex justify-between items-center bg-white">
+      <Link to="/" className="capitalize text-2xl sm:text-3xl font-bold leading-none">wex</Link>
 
       <div>
         {currentUser ? (
           <div className="flex items-center">
             <Link to="/profile">
-              <div className="flex items-center mr-4 cursor-pointer">
+              <div className="flex items-center cursor-pointer mr-1">
                 <img className="w-11 h-11 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src={`${currentUser?.image}`} />
                 <p className="ml-3 font-semibold">{currentUser.name}</p>
               </div>

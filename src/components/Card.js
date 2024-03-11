@@ -6,7 +6,6 @@ const Card = () => {
             emails 
             <p>zaki@gmail.com</p>
             <p>admin@gmail.com</p>
-            <p>rahim@gmail.com</p>
             <p>password: 6ba8865a74AB=</p>
         </div>
     );
