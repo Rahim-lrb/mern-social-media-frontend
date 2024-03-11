@@ -18,13 +18,14 @@ const Profile = (props) => {
         fetchUserPosts()
     }, [userForUsing]);
 
-    const fetchUserPosts = async (userId) => {
+    const fetchUserPosts = async () => {
         try {
-            // const url = 'http://localhost:5000/api'; local host
+            // const url = 'http://localhost:5000/api'; // local host
             const url = "https://wex-backend.onrender.com/api" // hosted
             // const url = "/api"  proxy
-
-            const response = await axios.get(`${url}/api/posts/user/${userForUsing._id}`);
+            console.log(userForUsing._id)
+            const response = await axios.get(`${url}/posts/user/${userForUsing._id}`);
+            console.log(response)
             setPosts(response.data);
         } catch (error) {
             console.error('Error fetching user posts:', error);
