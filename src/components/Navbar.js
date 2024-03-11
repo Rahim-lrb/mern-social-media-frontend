@@ -24,10 +24,10 @@ export default function Navbar() {
             <button onClick={handleLogout} className="inline-block py-2 px-6 bg-gray-50 hover:bg-gray-100 text-md text-gray-900 font-bold rounded-xl transition duration-200 focus:outline-none focus:bg-gray-100 focus:text-gray-900">Logout</button>
           </div>
         ) : (
-          <>
+          <div className='light:flex light:flex-col light:space-y-2'>
             <Link to="/login" className="inline-block py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200 mr-2">Login</Link>
             <Link to="/signup" className="inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200">Sign Up</Link>
-          </>
+          </div>
         )}
       </div>
 
